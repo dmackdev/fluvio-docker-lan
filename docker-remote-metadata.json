@@ -1,0 +1,8 @@
+{
+  "topics": [],
+  "home": {
+    "id": "home",
+    "remoteId": "docker-remote",
+    "publicEndpoint": "spu-home:9003"
+  }
+}

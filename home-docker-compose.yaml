@@ -1,0 +1,34 @@
+# Home Cluster
+services:
+  sc-home:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sc-home
+    environment:
+      - RUST_LOG=info
+    entrypoint: >
+      /bin/sh -c "
+      fluvio profile add docker 0.0.0.0:9003 docker;
+      bash -c 'sleep 5 ; fluvio cluster spu register --id 5001 -p spu-home:9010 --private-server spu-home:9011' &
+      ./fluvio-run sc --local /fluvio/metadata
+      "
+    volumes:
+      - ./home/fluvio-metadata:/fluvio/metadata
+    ports:
+      - 9003:9003
+  spu-home:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spu-home
+    hostname: spu-home
+    volumes:
+      - ./home/fluvio-data:/fluvio/data
+    ports:
+      - 9010:9010
+    environment:
+      - RUST_LOG=info
+    command: "./fluvio-run spu -i 5001 -p spu-home:9010 -v spu-home:9011 --sc-addr sc-home:9004 --log-base-dir /fluvio/data"
+    depends_on:
+      - sc-home
