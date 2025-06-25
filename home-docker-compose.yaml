@@ -10,7 +10,7 @@ services:
     entrypoint: >
       /bin/sh -c "
       fluvio profile add docker 0.0.0.0:9003 docker;
-      bash -c 'sleep 5 ; fluvio cluster spu register --id 5001 -p spu-home:9010 --private-server spu-home:9011' &
+      bash -c 'sleep 5 ; fluvio cluster spu register --id 5001 -p ${HOME_IP_ADDRESS}:9010 -l spu-home:9010 --private-server spu-home:9011' &
       ./fluvio-run sc --local /fluvio/metadata
       "
     volumes:

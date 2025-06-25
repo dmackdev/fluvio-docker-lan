@@ -9,7 +9,8 @@ Adapted from the Fluvio tutorial [Mirroring Two Local Clusters](https://www.fluv
 ## 1. Home Machine
 Execute the commands in a terminal on your "home" machine.
 ```bash
-docker compose -f home-docker-compose.yaml up -d
+# Ensure the environment variable is set to your "home" machine IP address 
+HOME_IP_ADDRESS=<...> docker compose -f home-docker-compose.yaml up -d
 docker exec -it sc-home /bin/sh
 fluvio remote register docker-remote
 fluvio remote list # Verify output
