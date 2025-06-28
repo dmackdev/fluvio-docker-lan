@@ -29,10 +29,10 @@ scp remote-docker-compose.yaml Dockerfile <USER>@<REMOTE IP>:~
 ```bash
 # Log in to remote machine
 ssh <USER>@<REMOTE IP>
-# Ensure the environment variable is set to your "home" machine IP address 
-HOME_IP_ADDRESS=<...> docker compose -f remote-docker-compose.yaml up -d
+docker compose -f remote-docker-compose.yaml up -d
 docker exec -it sc-remote /bin/sh
-echo '{"topics":[],"home":{"id":"home","remoteId":"docker-remote","publicEndpoint":"spu-home:9003"}}' > docker-remote-metadata.json
+# Ensure you replace <HOME_IP_ADDRESS> with the same value you used in the home machine setup.
+echo '{"topics":[],"home":{"id":"home","remoteId":"docker-remote","publicEndpoint":"<HOME_IP_ADDRESS>:9003"}}' > docker-remote-metadata.json
 fluvio home connect --file docker-remote-metadata.json
 fluvio partition list # Verify output
 fluvio home status # Verify output

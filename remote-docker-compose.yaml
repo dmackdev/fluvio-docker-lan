@@ -1,8 +1,6 @@
 # Remote Cluster        
 services:
   sc-remote:
-    extra_hosts:
-      - "spu-home:${HOME_IP_ADDRESS}"
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,8 +19,6 @@ services:
     ports:
       - 9003:9003
   spu-remote:
-    extra_hosts:
-      - "spu-home:${HOME_IP_ADDRESS}"
     build:
       context: .
       dockerfile: Dockerfile
